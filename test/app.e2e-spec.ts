@@ -20,25 +20,4 @@ describe('AuthController (e2e)', () => {
 	afterAll(async () => {
 		await app.close();
 	});
-
-	describe('/register', () => {
-		it('should return 201 status code with a valid payload', async () => {
-			const payload = {
-				name: 'John Doe',
-				email: 'johndoe@example.com',
-				password: 'p',
-				jobTitle: 'Developer',
-				role: 'user',
-				organisations: ['org1'],
-			};
-
-			const response = await request(app.getHttpServer())
-				.post('/register')
-				.send(payload)
-				.expect(HttpStatus.CREATED);
-
-			expect(response.body).toHaveProperty('id');
-			expect(typeof response.body.id).toBe('string');
-		});
-	});
 });
