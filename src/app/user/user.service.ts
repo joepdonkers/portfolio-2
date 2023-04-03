@@ -128,6 +128,7 @@ export class UserService {
 		const user = await this.userModel.findOne({ id: userId });
 
 		if (user.role === Role.Admin) {
+			console.log("checkIfAdmin returned true in user.service.ts with userId: " + userId);
 			return true;
 		}
 

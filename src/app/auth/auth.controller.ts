@@ -27,7 +27,6 @@ export class AuthController {
 	constructor(private readonly authService: AuthService) {}
 
 	@Post('register')
-	//@UseGuards(RolesGuard)
 	async register(@Body() newUser: UserRegistration): Promise<ResourceId> {
 		let identityUser = null;
 
@@ -43,7 +42,7 @@ export class AuthController {
 					newUser.name,
 					newUser.email,
 					newUser.jobTitle,
-					newUser.role,
+					//newUser.role,
 					newUser.organisations,
 				),
 			};

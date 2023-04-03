@@ -27,12 +27,14 @@ export class AuthService {
 		name: string,
 		email: string,
 		jobTitle: string,
-		role: Role,
+		//role: Role,
 		orgId: string[],
 	): Promise<string> {
 		var organisations = await this.organisationService.getOrganisationsById(
 			orgId,
 		);
+
+		var role = Role.Sales;
 
 		const user = new this.userModel({
 			id: id,
@@ -242,6 +244,7 @@ export class AuthService {
 			sign(
 				{ id: user.id },
 				process.env.JWT_SECRET,
+				{expiresIn: 30},
 				(err: Error, token: string) => {
 					if (err) reject(err);
 					else resolve(token);
