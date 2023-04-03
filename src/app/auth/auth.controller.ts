@@ -30,12 +30,21 @@ export class AuthController {
 	async register(@Body() newUser: UserRegistration): Promise<ResourceId> {
 		let identityUser = null;
 
+		// RegEx om te controleren of het wachtwoord minimaal 8 tekens, een hoofdletter, een cijfer en een speciaal teken bevat
+		const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+		// Controleer of het wachtwoord aan de complexiteitseis voldoet
+		if (!passwordRegex.test(newUser.password)) {
+			throw new HttpException(
+				'Password needs to be at least 8 characters long and contain at least 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character',
+				HttpStatus.BAD_REQUEST,
+			);
+		}
 		try {
 			identityUser = await this.authService.registerUser(
 				newUser.email,
 				newUser.password,
 			);
-
 			return {
 				id: await this.authService.createUser(
 					identityUser.id,
